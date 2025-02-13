@@ -1,25 +1,23 @@
-import { app, BrowserWindow } from "electron";
-import path from "path";
-import isDev from "electron-is-dev";
-import { fileURLToPath } from "url";
+/* eslint-disable @typescript-eslint/no-require-imports */
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
-const createWindow = () => {
+const createWindow = async () => {
+  const isDev = (await import("electron-is-dev")).default; // Dynamic import
+
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      preload: path.join(__dirname, "preload.cjs"),
     },
   });
 
   if (isDev) {
     win.loadURL("http://localhost:5173");
   } else {
-    win.loadFile(path.join(__dirname, "./dist/index.html"));
+    win.loadFile(path.join(__dirname, "dist/index.html"));
   }
 };
 
