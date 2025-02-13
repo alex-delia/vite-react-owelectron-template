@@ -13,6 +13,9 @@
     "electron:dev": "concurrently \"vite\" \"wait-on tcp:5173 && electron .\"",
     "electron:preview": "vite build && ELECTRON_IS_DEV=0 electron .",
     "electron:build": "vite build && ow-electron-builder",
+    "electron:build:win": "vite build && ow-electron-builder --win",
+    "electron:build:mac": "vite build && ow-electron-builder --mac",
+    "electron:build:linux": "vite build && ow-electron-builder --linux",
     "electron:build:all": "vite build && ow-electron-builder --win --mac --linux"
   },
   "devDependencies": {
@@ -45,17 +48,17 @@
   },
   "build": {
     "nodeGypRebuild": false,
-    "appId": "com.crosshairs.twitchoverlayapp",
     "asar": true,
+    "productName": "Twitch Overlay",
     "files": [
-      "main.cjs",
-      "preload.cjs",
       "dist/**/*",
-      "node_modules/**/*"
+      "*.js",
+      "*.cjs",
+      "*.html",
+      "*.exe"
     ],
     "directories": {
-      "output": "release",
-      "buildResources": "assets"
+      "output": "build"
     },
     "win": {
       "target": [
@@ -65,7 +68,9 @@
             "x64"
           ]
         }
-      ]
+      ],
+      "publisherName": "Twitch Overlay App",
+      "legalTrademarks": "Copyright 2025 Twitch Overlay App"
     },
     "mac": {
       "target": "dmg"
@@ -75,7 +80,9 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
