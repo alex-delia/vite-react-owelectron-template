@@ -2,28 +2,20 @@ import * as React from "react";
 import ReactDOM from "react-dom/client";
 import {
   RouterProvider,
-  createHashHistory,
   createBrowserHistory,
+  createHashHistory,
   createRouter,
 } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import "./styles.css";
 
-declare global {
-  interface Window {
-    process?: {
-      type: string;
-    };
-  }
-}
-
-const isElectron = window && window.process && window.process.type;
-
 // Set up a Router instance
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
-  history: isElectron ? createHashHistory() : createBrowserHistory(),
+  history: window.electronAPI?.isElectron
+    ? createHashHistory()
+    : createBrowserHistory(),
 });
 
 // Register things for typesafety
