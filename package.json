@@ -1,8 +1,7 @@
 {
-  "name": "twitchoverlayapp",
+  "name": "vite-react-electron-template",
   "version": "0.0.0",
-  "description": "Twitch Overlay App",
-  "author": "Crosshairs.gg",
+  "description": "Vite + React + Overwolf Electron Template",
   "private": true,
   "type": "module",
   "main": "main.js",
